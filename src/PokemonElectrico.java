@@ -20,6 +20,21 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public boolean ataca(Pokemon atacado){
+        if(this.pc <= 0 || atacado.pc <= 0){
+            System.out.println("no puede ser atacado");
+            return false;
+        }
+
+        Intermedio intermedio1 = new Intermedio("idk", 5);
+        intensidadAtaque = 38;
+        atacado.pc -= intensidadAtaque * intermedio1.ayudaPokemon();
+
+        System.out.println(this.nombre + " atacó a " + atacado.nombre + " con intensidad " + intensidadAtaque);
+        System.out.println("ataque fulgor!!");
+        if (atacado.pc <= 0) {
+            System.out.println(atacado.nombre + " se debilitó.");
+        }
+
         return true;
     }
 
@@ -29,6 +44,11 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public boolean defiende(){
+        generaAleatorio();
+        if(generaAleatorio() == true){
+            System.out.println("Dedendido con descarga electrica");
+        }
+        System.out.println("no me puedo defender pipipi");
         return true;
     }
 
@@ -40,6 +60,7 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public boolean descansa(){
+
         return false;
     }
 
@@ -70,6 +91,8 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public String toString(){
-        
+        return "nombre: " + nombre 
+        + "\nintensidad " + intensidadAtaque
+        + "\nentrenador " + entrenador; 
     }
 }

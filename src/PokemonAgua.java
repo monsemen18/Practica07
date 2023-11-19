@@ -71,7 +71,7 @@ public class PokemonAgua extends Pokemon{
     @Override
 	public String toString(){
         return "nombre: " + nombre 
-        + "\nintensidad " + intensidad
+        + "\nintensidad " + intensidadAtaque
         + "\nentrenador " + entrenador;
     }
 }
