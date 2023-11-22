@@ -14,4 +14,8 @@ public class Principiante extends Entrenador{
 	public int ayudaPokemon(){
         return 1;
     }
+
+	public String toString(){
+        return nombre;
+    }
 }

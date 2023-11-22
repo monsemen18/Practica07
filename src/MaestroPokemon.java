@@ -14,4 +14,8 @@ public class MaestroPokemon extends Entrenador{
 	public int ayudaPokemon(){
         return 3;
     }
+
+	public String toString(){
+        return nombre;
+    }
 }

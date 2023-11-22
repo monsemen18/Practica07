@@ -1,14 +1,19 @@
 import java.util.Random;
 
 public class PokemonPsiquico extends Pokemon{
-    /** atributos PokemonPsiquico */
-    protected boolean levitar;
-    protected String visionFuturo;
 
-    public PokemonPsiquico(String nombre, int intensidad, Entrenador entrenador, boolean levitar, String visionFuturo){
+	/** Intensidad del ataque de tipo psiquico */
+    protected int intensidadPsiquico;
+
+    /** Indicador de efecto confundir en otro pokemon */
+    protected boolean confundir;
+
+    final protected String TIPO = "Psiquico";
+
+    public PokemonPsiquico(String nombre, int intensidad, Entrenador entrenador, int especialPsiquico) {
         super(nombre, intensidad, entrenador);
-        this.levitar = levitar;
-        this.visionFuturo = visionFuturo;
+        this.intensidadPsiquico = especialPsiquico;
+        this.confundir = false;
     }
 
     /**
@@ -20,7 +25,13 @@ public class PokemonPsiquico extends Pokemon{
 	*/
     @Override
 	public boolean ataca(Pokemon atacado){
-        return true;
+        if(this.pc <= 0 || atacado.pc <= 0){
+            System.out.println("no puede ser atacado");
+            return false;
+        }
+
+		return true;
+
     }
 
 	/**
@@ -29,7 +40,14 @@ public class PokemonPsiquico extends Pokemon{
 	*/
     @Override
 	public boolean defiende(){
-        return true;
+		boolean rn = generaAleatorio();
+        if(rn == true){
+            System.out.println("Defendido con jaquecas");
+        } else {
+			System.out.println("no se puede defender pipipi");
+		}
+
+		return rn;
     }
 
 	/**
@@ -50,7 +68,8 @@ public class PokemonPsiquico extends Pokemon{
 	*/
     @Override
 	public void evoluciona(){
-
+		double evolucion = intensidadAtaque + (intensidadAtaque * 35 / 100);
+		System.out.println("El pokemon evoluciono. \nIntensidad aumento a: " + evolucion);
     }
 
 	/**
@@ -70,8 +89,10 @@ public class PokemonPsiquico extends Pokemon{
 	*/
     @Override
 	public String toString(){
-        return "nombre: " + nombre 
-        + "\nintensidad " + intensidadAtaque
-        + "\nentrenador " + entrenador;
+		return "nombre: " + nombre 
+        + "\nintensidad: " + intensidadAtaque
+        + "\nentrenador: " + entrenador
+		+ "\nespecial electrico: " + intensidadPsiquico
+		+ "\nelemento: " + TIPO;
     }
 }

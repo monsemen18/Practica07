@@ -1,14 +1,48 @@
 import java.util.Random;
 
 public class PokemonElectrico extends Pokemon{
-    /** atributos PokemonElectrico */
+
+	 /** atributos PokemonElectrico */
 	protected int electricidad;
 	protected int rapidez;
 
-    public PokemonElectrico(String nombre, int intensidad, Entrenador entrenador, int electricidad, int rapidez){
+	/** Intensidad del ataque especial tipo electrico */
+    protected int intensidadElectrico;
+
+    /** Verificador de efecto paralizar a otro pokemon */
+    protected boolean paralizar;
+
+    /** Tipo de elemento del pokemon */
+    final protected String TIPO = "Electrico";
+
+    /**
+     * Crea un nuevo pokemon de tipo electrico.
+     * @param nombre el nombre del pokemon.
+	 * @param intensidad la intensidad de ataque.
+	 * @param entrenador el entrenador del pokemon.
+     * @param especialElectrico la intesidad del ataque especial tipo electrico.
+     */
+    public PokemonElectrico(String nombre, int intensidad, Entrenador entrenador, int especialElectrico) {
         super(nombre, intensidad, entrenador);
-        this.electricidad = electricidad;
-        this.rapidez = rapidez;
+        intensidadElectrico = especialElectrico;
+        this.paralizar = false;
+    }
+
+    /**
+     * Metodo auxiliar de tipo getter para la variable final
+     * TIPO de nuestro Pokemon
+     * @return regresa el elemento que es Electrico
+     */
+    protected String getTIPO() {
+        return TIPO;
+    }
+
+	protected int getPC(){
+		return pc;
+	}
+
+	public int getIntensidadAtaque() {
+        return intensidadAtaque;
     }
 
     /**
@@ -25,12 +59,13 @@ public class PokemonElectrico extends Pokemon{
             return false;
         }
 
-        Intermedio intermedio1 = new Intermedio("idk", 5);
-        intensidadAtaque = 38;
+        Intermedio intermedio1 = new Intermedio("master", 5);
+        
         atacado.pc -= intensidadAtaque * intermedio1.ayudaPokemon();
 
         System.out.println(this.nombre + " atacó a " + atacado.nombre + " con intensidad " + intensidadAtaque);
         System.out.println("ataque fulgor!!");
+
         if (atacado.pc <= 0) {
             System.out.println(atacado.nombre + " se debilitó.");
         }
@@ -44,12 +79,14 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public boolean defiende(){
-        generaAleatorio();
-        if(generaAleatorio() == true){
-            System.out.println("Dedendido con descarga electrica");
-        }
-        System.out.println("no me puedo defender pipipi");
-        return true;
+		boolean rn = generaAleatorio();
+        if(rn == true){
+            System.out.println("Defendido con descarga electrica");
+        } else {
+			System.out.println("no se puede defender pipipi");
+		}
+
+		return rn;
     }
 
 	/**
@@ -60,8 +97,13 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public boolean descansa(){
-
-        return false;
+		if(pc > 100){
+			System.out.println("No puede descansar");
+			return false;
+		} else {
+			pc += 12;
+		}
+		return true;
     }
 
 	/**
@@ -71,7 +113,8 @@ public class PokemonElectrico extends Pokemon{
 	*/
     @Override
 	public void evoluciona(){
-
+		double evolucion = intensidadAtaque + (intensidadAtaque * 20 / 100);
+		System.out.println("El pokemon evoluciono. \nIntensidad aumento a: " + evolucion);
     }
 
 	/**
@@ -92,7 +135,8 @@ public class PokemonElectrico extends Pokemon{
     @Override
 	public String toString(){
         return "nombre: " + nombre 
-        + "\nintensidad " + intensidadAtaque
-        + "\nentrenador " + entrenador; 
+        + "\nintensidad: " + intensidadAtaque
+        + "\nentrenador: " + entrenador
+		+ "\nespecial electrico: " + intensidadElectrico;
     }
 }

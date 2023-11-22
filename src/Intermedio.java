@@ -15,6 +15,7 @@ public class Intermedio extends Entrenador{
         return 2;
     }
 
-    public static void main(String[] args) {
+    public String toString(){
+        return nombre;
     }
 }

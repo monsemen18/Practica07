@@ -1,15 +1,46 @@
 import java.util.Random;
 
 public class PokemonFuego extends Pokemon{
-   /** atributos PokemonFuego */
-   protected String humor;
-   protected int intensidadLlamaradas;
 
-   public PokemonFuego(String nombre, int intensidad, Entrenador entrenador, String humor, int intensidadLlamaradas){
-    super(nombre, intensidadLlamaradas, entrenador);
-    this.humor = humor;
-    this.intensidadLlamaradas = intensidadLlamaradas;
+	/** atributos PokemonFuego */
+	protected int intensidadLlamaradas;
+
+   /** Intensidad de ataque especial tipo fuego */
+   protected int intensidadFuego;
+    
+   /** Indicador de efecto quemadura en otro pokemon */
+   protected boolean quemar;
+
+   /** Tipo de elemento del pokemon */
+   final protected String TIPO = "Fuego";
+
+   /**
+	* Crea un nuevo pokemon de tipo fuego.
+	* @param nombre el nombre del pokemon.
+	* @param intensidad la intensidad de ataque.
+	* @param entrenador el entrenador del pokemon.
+	* @param especialFuego la intesidad del ataque especial tipo fuego.
+	*/
+   public PokemonFuego(String nombre, int intensidad, Entrenador entrenador, int especialFuego) {
+	   super(nombre, intensidad, entrenador);
+	   this.intensidadFuego = especialFuego;
+	   this.quemar = false;
    }
+
+   /**
+	* Metodo auxiliar de tipo getter para la variable final
+	* TIPO de nuestro Pokemon
+	* @return regresa el elemento que es Fuego
+	*/
+   protected String getTIPO() {
+	   return TIPO;
+   }
+
+   protected boolean usarEspecialFuego() {
+	   boolean resultado = generaAleatorio();
+	   return resultado;
+   }
+
 
    /**
 	* Ataca a un pokemon, restando la PC la intensidad 
@@ -20,7 +51,13 @@ public class PokemonFuego extends Pokemon{
 	*/
     @Override
 	public boolean ataca(Pokemon atacado){
-        return true;
+		if(this.pc <= 0 || atacado.pc <= 0){
+            System.out.println("no puede ser atacado");
+            return false;
+        }
+
+		return true;
+
     }
 
 	/**
@@ -29,7 +66,14 @@ public class PokemonFuego extends Pokemon{
 	*/
     @Override
 	public boolean defiende(){
-        return true;
+		boolean rn = generaAleatorio();
+        if(rn == true){
+            System.out.println("Defendido con ola de fuego");
+        } else {
+			System.out.println("no se puede defender pipipi");
+		}
+
+		return rn;
     }
 
 	/**
@@ -50,7 +94,8 @@ public class PokemonFuego extends Pokemon{
 	*/
     @Override
 	public void evoluciona(){
-
+		double evolucion = intensidadAtaque + (intensidadAtaque * 15 / 100);
+		System.out.println("El pokemon evoluciono. \nIntensidad aumento a: " + evolucion);
     }
 
 	/**
@@ -70,8 +115,10 @@ public class PokemonFuego extends Pokemon{
 	*/
     @Override
 	public String toString(){
-        return "nombre: " + nombre 
-        + "\nintensidad " + intensidadAtaque
-        + "\nentrenador " + entrenador;
+		return "nombre: " + nombre 
+        + "\nintensidad: " + intensidadAtaque
+        + "\nentrenador: " + entrenador
+		+ "\nespecial electrico: " + intensidadFuego
+		+ "\nelemento: " + TIPO;
     }
 }

@@ -1,14 +1,36 @@
 import java.util.Random;
 
 public class PokemonAgua extends Pokemon{
-     /** atributos PokemonAgua */
-	protected String adaptable;
-	protected int fuerzaPlantas;
 
-    public PokemonAgua(String nombre, int intensidad, Entrenador entrenador, String adaptable, int fuerzaPlantas){
+	/** Intensidad del ataque especial tipo agua */
+    protected int intensidadAgua;
+
+    /** Verificador de efecto congelamiento en otro pokemon */
+    protected boolean congelar;
+
+    /** Tipo de elemento del pokemon */
+    final protected String TIPO = "Agua";
+
+	/**
+     * Crea un nuevo pokemon de tipo agua.
+     * @param nombre el nombre del pokemon.
+	 * @param intensidad la intensidad de ataque.
+	 * @param entrenador el entrenador del pokemon.
+     * @param IntensidadAgua la intesidad del ataque especial tipo agua.
+     */
+    public PokemonAgua(String nombre, int intensidad, Entrenador entrenador, int intensidadAgua){
         super(nombre, intensidad, entrenador);
-        this.adaptable = adaptable;
-        this.fuerzaPlantas = fuerzaPlantas;
+		this.intensidadAgua = intensidadAgua;
+		this.congelar = false;
+    }
+
+	    /**
+     * Metodo auxiliar de tipo getter para la variable final
+     * TIPO de nuestro Pokemon
+     * @return regresa el elemento que es Agua
+     */
+    protected String getTIPO() {
+        return TIPO;
     }
 
     /**
@@ -20,7 +42,12 @@ public class PokemonAgua extends Pokemon{
 	*/
     @Override
 	public boolean ataca(Pokemon atacado){
-        return true;
+        if(this.pc <= 0 || atacado.pc <= 0){
+            System.out.println("no puede ser atacado");
+            return false;
+        }
+		return true;
+
     }
 
 	/**
@@ -29,7 +56,14 @@ public class PokemonAgua extends Pokemon{
 	*/
     @Override
 	public boolean defiende(){
-        return true;
+		boolean rn = generaAleatorio();
+        if(rn == true){
+            System.out.println("Defendido con chorro de agua");
+        } else {
+			System.out.println("no se puede defender pipipi");
+		}
+
+		return rn;
     }
 
 	/**
@@ -50,7 +84,8 @@ public class PokemonAgua extends Pokemon{
 	*/
     @Override
 	public void evoluciona(){
-
+		double evolucion = intensidadAtaque + (intensidadAtaque * 17 / 100);
+		System.out.println("El pokemon evoluciono. \nIntensidad aumento a: " + evolucion);
     }
 
 	/**
@@ -70,8 +105,10 @@ public class PokemonAgua extends Pokemon{
 	*/
     @Override
 	public String toString(){
-        return "nombre: " + nombre 
-        + "\nintensidad " + intensidadAtaque
-        + "\nentrenador " + entrenador;
+		return "nombre: " + nombre 
+        + "\nintensidad: " + intensidadAtaque
+        + "\nentrenador: " + entrenador
+		+ "\nespecial agua: " + intensidadAgua
+		+ "\nelemento: " + TIPO;
     }
 }
